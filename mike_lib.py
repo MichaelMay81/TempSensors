@@ -118,9 +118,6 @@ def run_outdoor():
     pressure2 = sensor2[1]  # hPa
     humidity2 = sensor2[2]  # relative humidity
 
-    print("sensor1: {}".format(sensor1))
-    print("sensor2: {}".format(sensor2))
-
     #room = "kids_room_"  # ws://192.168.66.54:8266/
     #room = "bed_room_"  # b4:e6:2d:36:db:28 ws://192.168.66.45:8266/
     #room = "living_room_"  # b4:e6:2d:37:38:3e ws://192.168.66.34:8266/
@@ -132,6 +129,26 @@ def run_outdoor():
     #send_to_graphite(data)
 
     led.on()
+
+def run_outdoor_loop():
+    #every = 60 * 30  # every half hour
+    every = 20
+
+    while True:
+        #set_time_by_ntp()
+        now_ut = utime.time()
+        sec_passed = now_ut % every
+        sec_to_wait = every - sec_passed
+
+        # RC is not very precise...
+        if sec_to_wait < (every/2):
+            sec_to_wait += every
+
+        print("now: {}, wait for: {}".format(utime.localtime(now_ut), sec_to_wait))
+
+        sleep(sec_to_wait)
+
+        run_outdoor()
 
 def run_test1():
     set_time_by_ntp()
