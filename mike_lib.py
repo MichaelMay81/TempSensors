@@ -39,7 +39,12 @@ def query_sensor(pinSda, pinScl):
     import bme280
 
     i2c = machine.I2C(sda=machine.Pin(pinSda), scl=machine.Pin(pinScl))
-    bme = bme280.BME280(i2c=i2c)
+    try:
+        bme = bme280.BME280(i2c=i2c)
+    except OSError:
+        print("ERROR: couldn't query sensor ({}/{})".format(pinSda, pinScl))
+        return None
+
     raw = bme.read_compensated_data()
     print("query sensors: {}".format(bme.values))
 
@@ -82,21 +87,33 @@ def send_to_graphite(data):
     sock.close()
 
 
-def _run_indoor(room, send=True):
-    led = machine.Pin(16, machine.Pin.OUT)
-    led.off()
+def query_sensor_return_data(pinSda, pinScl, room, tmp_offset):
+    sensor = query_sensor(pinSda, pinScl)
 
-    sensor = query_sensor(0, 2)
-    temperature = sensor[0]  # Degree Celsius
-    pressure    = sensor[1]  # hPa
-    humidity    = sensor[2]  # relative humidity
+    if sensor is None:
+        return None
 
-    data = [
+    # Degree Celsius
+    temperature = sensor[0] + tmp_offset
+    # hPa
+    pressure = sensor[1]
+    # relative humidity
+    humidity = sensor[2]
+
+    return [
         (room + "temperature", temperature),
         (room + "pressure", pressure),
         (room + "humidity", humidity)
     ]
-    if send:
+
+
+def _run_indoor(room, send=True):
+    led = machine.Pin(16, machine.Pin.OUT)
+    led.off()
+
+    data = query_sensor_return_data(0, 2, room[0], room[1])
+
+    if send and data is not None:
         send_to_graphite(data)
 
     led.on()
@@ -106,46 +123,29 @@ def _run_outdoor(room, send=True):
     led = machine.Pin(16, machine.Pin.OUT)
     led.off()
 
-    sensor1 = query_sensor(0, 2)
-    temperature1 = sensor1[0]  # Degree Celsius
-    pressure1    = sensor1[1]  # hPa
-    humidity1    = sensor1[2]  # relative humidity
+    data1 = query_sensor_return_data(0, 2, room[0] + "sensor1_", room[1])
+    data2 = query_sensor_return_data(4, 5, room[0] + "sensor2_", room[2])
 
-    sensor2 = query_sensor(4, 5)
-    temperature2 = sensor2[0]  # Degree Celsius
-    pressure2 = sensor2[1]  # hPa
-    humidity2 = sensor2[2]  # relative humidity
-
-    data1 = [
-        (room + "sensor1_temperature", temperature1),
-        (room + "sensor1_pressure", pressure1),
-        (room + "sensor1_humidity", humidity1)
-    ]
     if send:
-        send_to_graphite(data1)
-
-    data2 = [
-        (room + "sensor2_temperature", temperature2),
-        (room + "sensor2_pressure", pressure2),
-        (room + "sensor2_humidity", humidity2)
-    ]
-    if send:
-        send_to_graphite(data2)
+        if data1 is not None:
+            send_to_graphite(data1)
+        if data2 is not None:
+            send_to_graphite(data2)
 
     led.on()
 
 def run_loop():
-    every = 60 * 30  # every half hour
+    every = 60 * 10  # every half hour
     #every = 20
 
-    # room = "kids_room_"  # ws://192.168.66.103:8266/
-    # room = "bed_room_"
-    room = "living_room_"  # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/
-    # room = "outdoor_"  # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
-    _run = _run_indoor
-    #_run = _run_outdoor
+    # room = _run_indoor, "kids_room_", 0.0           # ws://192.168.66.103:8266/
+    # room = _run_indoor, "bed_room_"
+    # room = _run_indoor, "living_room_", 0.0        # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/.
 
-    print("Starting loop for {} every {}".format(room, every))
+    room = _run_outdoor, "outdoor_", 0.0, 0.0  # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
+
+    print("Starting loop for {} every {}".format(room[1], every))
+    _run = room[0]
 
     # repeat until we get a valid time
     while True:
@@ -157,7 +157,7 @@ def run_loop():
         else:
             break
 
-    _run(room, False)
+    _run(room[1:], False)
 
     while True:
         now_ut = utime.time()
@@ -173,7 +173,7 @@ def run_loop():
         sleep(sec_to_wait)
 
         try:
-            _run(room)
+            _run(room[1:])
         except OSError:
             print("ERROR: couldn't query sensor")
 

@@ -11,43 +11,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-928415581">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="7" />
-          <entry key="project.open.time.20" value="1" />
-          <entry key="project.open.time.6" value="1" />
-          <entry key="project.open.time.7" value="3" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.opened" value="8" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="py" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Python" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="dummy" value="9" />
-          <entry key="py" value="1362" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PLAIN_TEXT" value="9" />
-          <entry key="Python" value="1362" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages" />
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
@@ -62,12 +25,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mike_lib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1076">
-              <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
+            <state relative-caret-position="-1377">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
-                <marker date="1543349196172" expanded="true" signature="2567:4665" ph="..." />
-                <marker date="1543349196172" expanded="true" signature="3419:4665" ph="..." />
+                <marker date="1552334605888" expanded="true" signature="2917:4618" ph="..." />
+                <marker date="1552334605888" expanded="true" signature="3300:4618" ph="..." />
               </folding>
             </state>
           </provider>
@@ -107,6 +70,9 @@
     <findStrings>
       <find>utime</find>
       <find>set_time_by_ntp</find>
+      <find>ping</find>
+      <find>expect</find>
+      <find>try</find>
       <find>query_sensor</find>
     </findStrings>
   </component>
@@ -119,16 +85,18 @@
         <option value="$PROJECT_DIR$/MikeNtpTime.py" />
         <option value="$PROJECT_DIR$/MikeLib.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/../../speedtest-cli/mikeTest.py" />
+        <option value="$PROJECT_DIR$/../../speedtest-cli/mySpeedTest.py" />
         <option value="$PROJECT_DIR$/mike_lib.py" />
       </list>
     </option>
   </component>
   <component name="MicroPythonDevices" devicePath="COM3" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="420" />
-    <option name="y" value="133" />
-    <option name="width" value="903" />
-    <option name="height" value="501" />
+    <option name="x" value="16" />
+    <option name="y" value="285" />
+    <option name="width" value="1351" />
+    <option name="height" value="642" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -174,7 +142,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -188,7 +156,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="MicroPython.Flash mike_lib.py">
+  <component name="RunManager" selected="Python.mySpeedTest">
     <configuration name="Flash MikeLib.py" type="MicroPythonConfigurationType" factoryName="MicroPython" temporary="true" nameIsGenerated="true" path="$PROJECT_DIR$/MikeLib.py">
       <module name="TurtleTempSensorsCode" />
       <method v="2" />
@@ -201,13 +169,59 @@
       <module name="TurtleTempSensorsCode" />
       <method v="2" />
     </configuration>
+    <configuration name="mikeTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TurtleTempSensorsCode" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../speedtest-cli" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../speedtest-cli/mikeTest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="mySpeedTest" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="TurtleTempSensorsCode" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../speedtest-cli" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../speedtest-cli/mySpeedTest.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="MicroPython.Flash MikeLib.py" />
       <item itemvalue="MicroPython.Flash mike_lib.py" />
       <item itemvalue="MicroPython.Flash main.py" />
+      <item itemvalue="Python.mikeTest" />
+      <item itemvalue="Python.mySpeedTest" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.mySpeedTest" />
+        <item itemvalue="Python.mikeTest" />
         <item itemvalue="MicroPython.Flash mike_lib.py" />
         <item itemvalue="MicroPython.Flash main.py" />
         <item itemvalue="MicroPython.Flash MikeLib.py" />
@@ -229,17 +243,18 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1516" height="986" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2496617" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49941385" visible="true" weight="0.22124493" />
+      <window_info active="true" id="Structure" order="2" sideWeight="0.50058615" side_tool="true" visible="true" weight="0.22124493" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.17253521" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.3298122" />
       <window_info anchor="bottom" id="Python Console" order="2" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" />
       <window_info anchor="bottom" id="Version Control" order="5" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.3298122" />
+      <window_info anchor="bottom" id="Run" order="6" weight="0.14419696" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -249,10 +264,12 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../speedtest-cli/tests/scripts/source.py" />
+    <entry file="file://$PROJECT_DIR$/../../speedtest-cli/myspeedtest.log" />
+    <entry file="file://$PROJECT_DIR$/../../speedtest-cli/mySpeedTest.py" />
+    <entry file="file://$PROJECT_DIR$/../../speedtest-cli/speedtest.py" />
+    <entry file="file://$PROJECT_DIR$/../../speedtest-cli/mikeTest.py" />
     <entry file="file://$PROJECT_DIR$/mike_ntptime.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -279,12 +296,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mike_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1076">
-          <caret line="142" column="4" selection-start-line="142" selection-start-column="4" selection-end-line="142" selection-end-column="4" />
+        <state relative-caret-position="-1377">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-            <marker date="1543349196172" expanded="true" signature="2567:4665" ph="..." />
-            <marker date="1543349196172" expanded="true" signature="3419:4665" ph="..." />
+            <marker date="1552334605888" expanded="true" signature="2917:4618" ph="..." />
+            <marker date="1552334605888" expanded="true" signature="3300:4618" ph="..." />
           </folding>
         </state>
       </provider>
