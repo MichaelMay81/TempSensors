@@ -1,6 +1,10 @@
 import utime  # utime == time ??
 import machine
 
+from ucollections import namedtuple
+
+Sensor = namedtuple('Sensor', ['id', 'pinSda', 'pinScl'])
+
 
 def get_mac_address():
     import network
@@ -35,14 +39,14 @@ def sleep_rtc(sleep_for_sec):
     machine.deepsleep()
 
 
-def query_sensor(pinSda, pinScl):
+def query_sensor(pin_sda, pin_scl):
     import bme280
 
-    i2c = machine.I2C(sda=machine.Pin(pinSda), scl=machine.Pin(pinScl))
+    i2c = machine.I2C(sda=machine.Pin(pin_sda), scl=machine.Pin(pin_scl))
     try:
         bme = bme280.BME280(i2c=i2c)
     except OSError:
-        print("ERROR: couldn't query sensor ({}/{})".format(pinSda, pinScl))
+        print("ERROR: couldn't query sensor ({}/{})".format(pin_sda, pin_scl))
         return None
 
     raw = bme.read_compensated_data()
@@ -55,7 +59,7 @@ def query_sensor(pinSda, pinScl):
     # Humidity: 1/1024 % relative humidity
     humi = raw[2] / 1024
 
-    return (temp, pres, humi)
+    return temp, pres, humi
 
 
 def send_to_graphite(data):
@@ -75,7 +79,7 @@ def send_to_graphite(data):
         db_name = tup[0]
         date = tup[1]
         data_string = "{}.metric {} {} \n".format(db_name, date, timestamp)
-        #print(data_string)
+        # print(data_string)
         bytes_sent = sock.send(data_string)
         if bytes_sent == 0:
             send_errors = True
@@ -87,66 +91,28 @@ def send_to_graphite(data):
     sock.close()
 
 
-def query_sensor_return_data(pinSda, pinScl, room, tmp_offset):
-    sensor = query_sensor(pinSda, pinScl)
+def _run(sensors, send=True):
+    led = machine.Pin(16, machine.Pin.OUT)
+    led.off()
 
-    if sensor is None:
-        return None
+    raw_data = [(s.id, query_sensor(s.pinSda, s.pinScl)) for s in sensors]
 
-    # Degree Celsius
-    temperature = sensor[0] + tmp_offset
-    # hPa
-    pressure = sensor[1]
-    # relative humidity
-    humidity = sensor[2]
-
-    return [
-        (room + "temperature", temperature),
-        (room + "pressure", pressure),
-        (room + "humidity", humidity)
+    data = [
+        ((d[0] + "temperature", d[1][0]),  # Degree Celsius
+         (d[0] + "pressure", d[1][1]),  # hPa
+         (d[0] + "humidity", d[1][2]))  # relative humidity
+        for d in raw_data
     ]
 
-
-def _run_indoor(room, send=True):
-    led = machine.Pin(16, machine.Pin.OUT)
-    led.off()
-
-    data = query_sensor_return_data(0, 2, room[0], room[1])
-
-    if send and data is not None:
-        send_to_graphite(data)
-
-    led.on()
-
-
-def _run_outdoor(room, send=True):
-    led = machine.Pin(16, machine.Pin.OUT)
-    led.off()
-
-    data1 = query_sensor_return_data(0, 2, room[0] + "sensor1_", room[1])
-    data2 = query_sensor_return_data(4, 5, room[0] + "sensor2_", room[2])
-
     if send:
-        if data1 is not None:
-            send_to_graphite(data1)
-        if data2 is not None:
-            send_to_graphite(data2)
+        for d in data:
+            if d is not None:
+                send_to_graphite(d)
 
     led.on()
 
-def run_loop():
-    every = 60 * 10  # every half hour
-    #every = 20
 
-    # room = _run_indoor, "kids_room_", 0.0           # ws://192.168.66.103:8266/
-    # room = _run_indoor, "bed_room_"
-    # room = _run_indoor, "living_room_", 0.0        # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/.
-
-    room = _run_outdoor, "outdoor_", 0.0, 0.0  # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
-
-    print("Starting loop for {} every {}".format(room[1], every))
-    _run = room[0]
-
+def _run_loop(sensors, every):
     # repeat until we get a valid time
     while True:
         try:
@@ -157,7 +123,7 @@ def run_loop():
         else:
             break
 
-    _run(room[1:], False)
+    _run(sensors, False)
 
     while True:
         now_ut = utime.time()
@@ -165,7 +131,7 @@ def run_loop():
         sec_to_wait = every - sec_passed
 
         # RC is not very precise...
-        #if sec_to_wait < (every/2):
+        # if sec_to_wait < (every/2):
         #    sec_to_wait += every
 
         print("now: {}, wait for: {}".format(utime.localtime(now_ut), sec_to_wait))
@@ -173,7 +139,7 @@ def run_loop():
         sleep(sec_to_wait)
 
         try:
-            _run(room[1:])
+            _run(sensors)
         except OSError:
             print("ERROR: couldn't query sensor")
 
@@ -184,13 +150,37 @@ def run_loop():
             print("ERROR: couldn't set time by ntp")
 
 
-def run_test1():
-    set_time_by_ntp()
+def run_loop(room_id: str = None):
+    every = 60 * 10  # every half hour
+    # every = 20
+
+    rooms = {
+        "kids_room": [Sensor("", 0, 2)],  # ws://192.168.66.103:8266/
+        "bed_room": [Sensor("", 0, 2)],
+        "living_room": [Sensor("", 0, 2)],  # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/
+        "outdoor": [
+            Sensor("sensor1_", 0, 2),  # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
+            Sensor("sensor2_", 4, 5)
+        ]}
+
+    if room_id is None or room_id not in rooms:
+        print("usage: run_loop(id)")
+        print("ids:")
+        for room in rooms:
+            print("- \"{}\"".format(room))
+
+    else:
+        room = rooms[room_id]
+        sensors = [Sensor(room_id + '_' + s.id, s.pinSda, s.pinScl) for s in room]
+
+        print("Starting loop for {} every {}".format(room_id, every))
+        _run_loop(sensors, every)
+
+
+# def run_test1():
+#    set_time_by_ntp()
 
     # Virtual (RTOS-based) timers with callback
-    tim = machine.Timer(-1)
-    sleep_for_ms = 10000
-    tim.init(period=sleep_for_ms, mode=machine.Timer.PERIODIC, callback=lambda t: _run_indoor())
-
-
-
+#    tim = machine.Timer(-1)
+#    sleep_for_ms = 10000
+#    tim.init(period=sleep_for_ms, mode=machine.Timer.PERIODIC, callback=lambda t: _run_indoor())
