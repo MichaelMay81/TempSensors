@@ -62,6 +62,26 @@ def query_sensor(pin_sda, pin_scl):
     return temp, pres, humi
 
 
+def query_onewire_sensor(pin_dat):
+    import onewire, ds18x20
+
+    dat = machine.Pin(pin_dat)
+    sensor = ds18x20.DS18X20(onewire.OneWire(dat))
+
+    # scan for devices on the bus
+    roms = sensor.scan()
+    print('found devices:', roms)
+
+    # loop 10 times and print all temperatures
+    for i in range(10):
+        print('temperatures:', end=' ')
+        sensor.convert_temp()
+        utime.sleep_ms(750)
+        for rom in roms:
+            print(sensor.read_temp(rom), end=' ')
+        print()
+
+
 def send_to_graphite(data):
     import socket
 
@@ -79,7 +99,7 @@ def send_to_graphite(data):
         db_name = tup[0]
         date = tup[1]
         data_string = "{}.metric {} {} \n".format(db_name, date, timestamp)
-        # print(data_string)
+        #print(data_string)
         bytes_sent = sock.send(data_string)
         if bytes_sent == 0:
             send_errors = True
@@ -154,12 +174,14 @@ def run_loop(room_id: str = None):
     every = 60 * 10  # every half hour
     # every = 20
 
+    # :( broken:
+    # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/
     rooms = {
         "kids_room": [Sensor("", 0, 2)],  # ws://192.168.66.103:8266/
         "bed_room": [Sensor("", 0, 2)],
-        "living_room": [Sensor("", 0, 2)],  # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/
-        "outdoor": [
-            Sensor("sensor1_", 0, 2),  # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
+        "living_room": [Sensor("", 0, 2)],
+        "outdoor": [    # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
+            Sensor("sensor1_", 0, 2),
             Sensor("sensor2_", 4, 5)
         ]}
 
