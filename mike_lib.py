@@ -3,7 +3,7 @@ import machine
 
 from ucollections import namedtuple
 
-Sensor = namedtuple('Sensor', ['id', 'pinSda', 'pinScl'])
+Sensor = namedtuple('Sensor', ['id', 'pins'])
 
 
 def get_mac_address():
@@ -39,7 +39,7 @@ def sleep_rtc(sleep_for_sec):
     machine.deepsleep()
 
 
-def query_sensor(pin_sda, pin_scl):
+def query_multi_sensor(pin_sda, pin_scl):
     import bme280
 
     i2c = machine.I2C(sda=machine.Pin(pin_sda), scl=machine.Pin(pin_scl))
@@ -70,16 +70,23 @@ def query_onewire_sensor(pin_dat):
 
     # scan for devices on the bus
     roms = sensor.scan()
-    print('found devices:', roms)
+    #print('found devices:', roms)
 
-    # loop 10 times and print all temperatures
-    for i in range(10):
-        print('temperatures:', end=' ')
-        sensor.convert_temp()
-        utime.sleep_ms(750)
-        for rom in roms:
-            print(sensor.read_temp(rom), end=' ')
-        print()
+    # get reading
+    sensor.convert_temp()
+    utime.sleep_ms(750)
+    data = sensor.read_temp(roms[0])
+    print("query sensors: {}".format(data))
+    return data
+
+
+def query_sensor(pins):
+    if len(pins) == 1:
+        return [query_onewire_sensor(pins[0])]
+    elif len(pins) == 2:
+        return query_multi_sensor(pins[0], pins[1])
+    else:
+        return None
 
 
 def send_to_graphite(data):
@@ -115,14 +122,20 @@ def _run(sensors, send=True):
     led = machine.Pin(16, machine.Pin.OUT)
     led.off()
 
-    raw_data = [(s.id, query_sensor(s.pinSda, s.pinScl)) for s in sensors]
+    print("get data")
+    raw_data = [(s.id, query_sensor(s.pins)) for s in sensors]
 
-    data = [
-        ((d[0] + "temperature", d[1][0]),  # Degree Celsius
-         (d[0] + "pressure", d[1][1]),  # hPa
-         (d[0] + "humidity", d[1][2]))  # relative humidity
-        for d in raw_data
-    ]
+    def data_to_string(d):
+        s = []
+        if len(d[1]) > 0:
+            s.append((d[0] + "temperature", d[1][0]))  # Degree Celsius
+        if len(d[1]) > 1:
+            s.append((d[0] + "pressure", d[1][1]))  # hPa
+        if len(d[1]) > 2:
+            s.append((d[0] + "humidity", d[1][2]))  # relative humidity
+        return s
+
+    data = [data_to_string(d) for d in raw_data]
 
     if send:
         for d in data:
@@ -136,7 +149,7 @@ def _run_loop(sensors, every):
     # repeat until we get a valid time
     while True:
         try:
-            set_time_by_ntp()
+                set_time_by_ntp()
         except OSError:
             print("ERROR: couldn't set time by ntp")
             sleep(5)
@@ -177,12 +190,13 @@ def run_loop(room_id: str = None):
     # :( broken:
     # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/
     rooms = {
-        "kids_room": [Sensor("", 0, 2)],  # ws://192.168.66.103:8266/
-        "bed_room": [Sensor("", 0, 2)],
-        "living_room": [Sensor("", 0, 2)],
+        "kids_room": [Sensor("", [0, 2])],  # ws://192.168.66.103:8266/
+        "bed_room": [Sensor("", [0, 2])],
+        "living_room": [Sensor("", [0, 2])],
         "outdoor": [    # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
-            Sensor("sensor1_", 0, 2),
-            Sensor("sensor2_", 4, 5)
+            Sensor("sensor1_", [0, 2]),
+            Sensor("sensor2_", [4, 5]),
+            Sensor("ground_", [12])
         ]}
 
     if room_id is None or room_id not in rooms:
@@ -193,7 +207,7 @@ def run_loop(room_id: str = None):
 
     else:
         room = rooms[room_id]
-        sensors = [Sensor(room_id + '_' + s.id, s.pinSda, s.pinScl) for s in room]
+        sensors = [Sensor(room_id + '_' + s.id, s.pins) for s in room]
 
         print("Starting loop for {} every {}".format(room_id, every))
         _run_loop(sensors, every)

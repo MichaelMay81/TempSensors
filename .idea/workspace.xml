@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="56cd6f2a-c559-48a8-b063-dd6487ca3dea" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mike_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/mike_lib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,17 +26,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mike_lib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="117" column="12" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="12" />
+            <state relative-caret-position="1013">
+              <caret line="142" column="32" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="32" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
-                <element signature="e#173#282#0" />
-                <element signature="e#312#462#0" />
-                <element signature="e#495#521#0" />
-                <element signature="e#558#910#0" />
-                <element signature="e#1564#2306#0" />
-                <marker date="1571946848525" expanded="true" signature="2809:5086" ph="..." />
-                <marker date="1571946848525" expanded="true" signature="3335:5086" ph="..." />
+                <marker date="1572073524960" expanded="true" signature="5292:5416" ph="..." />
               </folding>
             </state>
           </provider>
@@ -44,8 +39,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+            <state relative-caret-position="170">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#107#121#0" expanded="true" />
               </folding>
@@ -56,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+            <state>
+              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -89,19 +84,19 @@
       <list>
         <option value="$PROJECT_DIR$/MikeNtpTime.py" />
         <option value="$PROJECT_DIR$/MikeLib.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/../../speedtest-cli/mikeTest.py" />
         <option value="$PROJECT_DIR$/../../speedtest-cli/mySpeedTest.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/mike_lib.py" />
       </list>
     </option>
   </component>
   <component name="MicroPythonDevices" devicePath="COM3" />
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="1394" />
-    <option name="y" value="18" />
-    <option name="width" value="1352" />
-    <option name="height" value="1656" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="742" />
+    <option name="y" value="44" />
+    <option name="width" value="3026" />
+    <option name="height" value="1966" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -242,7 +237,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1513" height="983" extended-state="7" />
+    <frame x="371" y="22" width="1513" height="983" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -279,8 +274,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/boot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="8" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="8" />
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#107#121#0" expanded="true" />
           </folding>
@@ -289,24 +284,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        <state>
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mike_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="117" column="12" selection-start-line="117" selection-start-column="4" selection-end-line="117" selection-end-column="12" />
+        <state relative-caret-position="1013">
+          <caret line="142" column="32" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="32" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-            <element signature="e#173#282#0" />
-            <element signature="e#312#462#0" />
-            <element signature="e#495#521#0" />
-            <element signature="e#558#910#0" />
-            <element signature="e#1564#2306#0" />
-            <marker date="1571946848525" expanded="true" signature="2809:5086" ph="..." />
-            <marker date="1571946848525" expanded="true" signature="3335:5086" ph="..." />
+            <marker date="1572073524960" expanded="true" signature="5292:5416" ph="..." />
           </folding>
         </state>
       </provider>

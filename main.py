@@ -1,3 +1,3 @@
 import mike_lib
 
-mike_lib.run_loop()
+mike_lib.run_loop("outdoor")
