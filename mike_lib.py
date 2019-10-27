@@ -46,7 +46,7 @@ def query_multi_sensor(pin_sda, pin_scl):
     try:
         bme = bme280.BME280(i2c=i2c)
     except OSError:
-        print("ERROR: couldn't query sensor ({}/{})".format(pin_sda, pin_scl))
+        print("ERROR: couldn't query sensor (pins:{},{})".format(pin_sda, pin_scl))
         return None
 
     raw = bme.read_compensated_data()
@@ -72,8 +72,13 @@ def query_onewire_sensor(pin_dat):
     roms = sensor.scan()
     #print('found devices:', roms)
 
+    if not roms:
+        print("ERROR: couldn't query sensor (pin:{})".format(pin_dat))
+        return None
+
     # get reading
     sensor.convert_temp()
+
     utime.sleep_ms(750)
     data = sensor.read_temp(roms[0])
     print("query sensors: {}".format(data))
@@ -90,32 +95,34 @@ def query_sensor(pins):
 
 
 def send_to_graphite(data):
-    import socket
+    if data:
+        import socket
 
-    ts_offset = 946684800  # 1970 to 2000
-    timestamp = utime.time() + ts_offset
-    print("time: {}".format(utime.localtime()))
+        ts_offset = 946684800  # 1970 to 2000
+        timestamp = utime.time() + ts_offset
+        print("time: {}".format(utime.localtime()))
 
-    ip = "192.168.66.100"
-    port = 2003
-    sock = socket.socket()
-    sock.connect((ip, port))
+        ip = "192.168.66.100"
+        port = 2003
+        sock = socket.socket()
+        sock.connect((ip, port))
 
-    send_errors = False
-    for tup in data:
-        db_name = tup[0]
-        date = tup[1]
-        data_string = "{}.metric {} {} \n".format(db_name, date, timestamp)
-        #print(data_string)
-        bytes_sent = sock.send(data_string)
-        if bytes_sent == 0:
-            send_errors = True
+        send_errors = False
+        for tup in data:
+            db_name = tup[0]
+            date = tup[1]
+            if date:
+                data_string = "{}.metric {} {} \n".format(db_name, date, timestamp)
+                #print(data_string)
+                bytes_sent = sock.send(data_string)
+                if bytes_sent == 0:
+                    send_errors = True
 
-        if send_errors:
-            print("!!Something went wrong while sending data to {}:{}".format(ip, port))
-        else:
-            print("Sent to {}:{}".format(ip, port))
-    sock.close()
+                if send_errors:
+                    print("!!Something went wrong while sending data to {}:{} {}".format(ip, port, db_name))
+                else:
+                    print("Sent to {}:{} {}".format(ip, port, db_name))
+        sock.close()
 
 
 def _run(sensors, send=True):
@@ -127,20 +134,18 @@ def _run(sensors, send=True):
 
     def data_to_string(d):
         s = []
-        if len(d[1]) > 0:
-            s.append((d[0] + "temperature", d[1][0]))  # Degree Celsius
-        if len(d[1]) > 1:
-            s.append((d[0] + "pressure", d[1][1]))  # hPa
-        if len(d[1]) > 2:
-            s.append((d[0] + "humidity", d[1][2]))  # relative humidity
+        if d[1]:
+            if len(d[1]) > 0:
+                s.append((d[0] + "temperature", d[1][0]))  # Degree Celsius
+            if len(d[1]) > 1:
+                s.append((d[0] + "pressure", d[1][1]))  # hPa
+            if len(d[1]) > 2:
+                s.append((d[0] + "humidity", d[1][2]))  # relative humidity
         return s
 
-    data = [data_to_string(d) for d in raw_data]
-
     if send:
-        for d in data:
-            if d is not None:
-                send_to_graphite(d)
+        for d in raw_data:
+            send_to_graphite(data_to_string(d))
 
     led.on()
 

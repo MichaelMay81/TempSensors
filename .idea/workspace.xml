@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56cd6f2a-c559-48a8-b063-dd6487ca3dea" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mike_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/mike_lib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,11 +24,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mike_lib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1013">
-              <caret line="142" column="32" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="32" />
+            <state relative-caret-position="493">
+              <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
-                <marker date="1572073524960" expanded="true" signature="5292:5416" ph="..." />
+                <marker date="1572119510005" expanded="true" signature="5566:5690" ph="..." />
               </folding>
             </state>
           </provider>
@@ -92,9 +90,9 @@
     </option>
   </component>
   <component name="MicroPythonDevices" devicePath="COM3" />
-  <component name="ProjectFrameBounds">
-    <option name="x" value="742" />
-    <option name="y" value="44" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="-168" />
+    <option name="y" value="30" />
     <option name="width" value="3026" />
     <option name="height" value="1966" />
   </component>
@@ -237,7 +235,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="371" y="22" width="1513" height="983" extended-state="0" />
+    <frame x="-84" y="15" width="1513" height="983" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -291,11 +289,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mike_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1013">
-          <caret line="142" column="32" selection-start-line="142" selection-start-column="16" selection-end-line="142" selection-end-column="32" />
+        <state relative-caret-position="493">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-            <marker date="1572073524960" expanded="true" signature="5292:5416" ph="..." />
+            <marker date="1572119510005" expanded="true" signature="5566:5690" ph="..." />
           </folding>
         </state>
       </provider>
