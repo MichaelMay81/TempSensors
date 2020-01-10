@@ -5,6 +5,29 @@ from ucollections import namedtuple
 
 Sensor = namedtuple('Sensor', ['id', 'pins'])
 
+logFile = 'log.txt'
+
+
+def output_log():
+    try:
+        f = open(logFile, 'r')
+        print(f.read())
+        f.close()
+    except OSError:
+        print("no log file...")
+
+
+def write_to_log(message):
+    print(message)
+    f = open(logFile, 'a')
+    f.write('{}: {}\n'.format(utime.localtime(), message))
+    f.close()
+
+
+def remove_log():
+    import os
+    os.remove(logFile)
+
 
 def get_mac_address():
     import network
@@ -46,7 +69,7 @@ def query_multi_sensor(pin_sda, pin_scl):
     try:
         bme = bme280.BME280(i2c=i2c)
     except OSError:
-        print("ERROR: couldn't query sensor (pins:{},{})".format(pin_sda, pin_scl))
+        write_to_log("Warning: couldn't query sensor (pins:{},{})".format(pin_sda, pin_scl))
         return None
 
     raw = bme.read_compensated_data()
@@ -151,13 +174,17 @@ def _run(sensors, send=True):
 
 
 def _run_loop(sensors, every):
+    write_to_log("starting loop")
+
     # repeat until we get a valid time
     while True:
         try:
-                set_time_by_ntp()
+            set_time_by_ntp()
         except OSError:
-            print("ERROR: couldn't set time by ntp")
+            print("Warning: couldn't set time by ntp")
             sleep(5)
+        except Exception as e:  # most generic exception you can catch
+            write_to_log('ERROR: ntp ({})'.format(str(e)))
         else:
             break
 
@@ -179,13 +206,15 @@ def _run_loop(sensors, every):
         try:
             _run(sensors)
         except OSError:
-            print("ERROR: couldn't query sensor")
+            print("Warning: couldn't query sensor")
+        except Exception as e:  # most generic exception you can catch
+            write_to_log('ERROR: sensors ({})'.format(str(e)))
 
         # update time
         try:
             set_time_by_ntp()
         except OSError:
-            print("ERROR: couldn't set time by ntp")
+            print("Warning: couldn't set time by ntp")
 
 
 def run_loop(room_id: str = None):
@@ -195,16 +224,19 @@ def run_loop(room_id: str = None):
     # :( broken:
     # b4:e6:2d:37:38:3e ws://192.168.66.101:8266/
     rooms = {
-        "kids_room": [Sensor("", [0, 2])],  # ws://192.168.66.103:8266/
+        "kids_room": [Sensor("", [0, 2])], # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
         "bed_room": [Sensor("", [0, 2])],
         "living_room": [Sensor("", [0, 2])],
-        "outdoor": [    # b4:e6:2d:36:db:28 ws://192.168.66.102:8266/
+        "outdoor": [    # b4:e6:2d:37:3f:ef ws://192.168.66.103:8266/
             Sensor("sensor1_", [0, 2]),
             Sensor("sensor2_", [4, 5]),
             Sensor("ground_", [12])
         ]}
 
     if room_id is None or room_id not in rooms:
+        print('Log:')
+        output_log()
+        print()
         print("usage: run_loop(id)")
         print("ids:")
         for room in rooms:

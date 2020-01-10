@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="56cd6f2a-c559-48a8-b063-dd6487ca3dea" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mike_lib.py" beforeDir="false" afterPath="$PROJECT_DIR$/mike_lib.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,11 +26,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mike_lib.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+            <state relative-caret-position="374">
+              <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
-                <marker date="1572119510005" expanded="true" signature="5566:5690" ph="..." />
               </folding>
             </state>
           </provider>
@@ -37,8 +38,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/boot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="136">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#107#121#0" expanded="true" />
               </folding>
@@ -49,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+            <state relative-caret-position="34">
+              <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -70,8 +71,10 @@
       <find>set_time_by_ntp</find>
       <find>ping</find>
       <find>expect</find>
-      <find>try</find>
       <find>query_sensor</find>
+      <find>sleep</find>
+      <find>try</find>
+      <find>ntp</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -90,9 +93,9 @@
     </option>
   </component>
   <component name="MicroPythonDevices" devicePath="COM3" />
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="-168" />
-    <option name="y" value="30" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-184" />
+    <option name="y" value="182" />
     <option name="width" value="3026" />
     <option name="height" value="1966" />
   </component>
@@ -235,12 +238,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-84" y="15" width="1513" height="983" extended-state="1" />
-    <editor active="true" />
+    <frame x="-7" y="-7" width="1513" height="983" extended-state="6" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49403974" visible="true" weight="0.10141988" />
-      <window_info id="Structure" order="2" sideWeight="0.5059603" side_tool="true" visible="true" weight="0.10141988" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.48741722" visible="true" weight="0.10141988" />
+      <window_info id="Structure" order="2" sideWeight="0.5125828" side_tool="true" visible="true" weight="0.10141988" />
       <window_info anchor="bottom" id="Terminal" order="0" weight="0.17233294" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" weight="0.3298122" />
       <window_info active="true" anchor="bottom" id="Python Console" order="2" visible="true" weight="0.11592506" />
@@ -263,6 +265,38 @@
     <entry file="file://$PROJECT_DIR$/../../speedtest-cli/mySpeedTest.py" />
     <entry file="file://$PROJECT_DIR$/../../speedtest-cli/speedtest.py" />
     <entry file="file://$PROJECT_DIR$/../../speedtest-cli/mikeTest.py" />
+    <entry file="file://$PROJECT_DIR$/boot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
+          <folding>
+            <element signature="e#107#121#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/IdeaProjects/SamPi/main.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/IdeaProjects/SamPi-TMP/SamPi/src/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#60#83#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/IdeaProjects/SamPi-TMP/SamPi/src/play.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="29" selection-start-line="2" selection-start-column="29" selection-end-line="2" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/mike_ntptime.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -270,30 +304,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/boot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#107#121#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mike_lib.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+        <state relative-caret-position="374">
+          <caret line="22" column="21" selection-start-line="22" selection-start-column="21" selection-end-line="22" selection-end-column="21" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
-            <marker date="1572119510005" expanded="true" signature="5566:5690" ph="..." />
           </folding>
         </state>
       </provider>
