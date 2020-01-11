@@ -1,3 +1,6 @@
+# this file is based on micropython ntptime
+# changed to allow setting the ntp host
+
 try:
     import usocket as socket
 except:
